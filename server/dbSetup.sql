@@ -1,8 +1,48 @@
 CREATE TABLE IF NOT EXISTS accounts(
-  id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
-  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
-  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
+  id VARCHAR(255) NOT NULL primary key,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   name varchar(255) COMMENT 'User Name',
   email varchar(255) UNIQUE COMMENT 'User Email',
-  picture varchar(255) COMMENT 'User Picture'
+  picture varchar(255) COMMENT 'User Picture',
+  coverImg VARCHAR(1000)
 ) default charset utf8mb4 COMMENT '';
+
+ALTER TABLE accounts ADD COLUMN coverImg VARCHAR(1000);
+
+CREATE TABLE IF NOT EXISTS keeps (
+  id int NOT NULL primary key,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  name VARCHAR(255) NOT NULL,
+  description VARCHAR(1000) NOT NULL,
+  img VARCHAR(1000) NOT NULL,
+  views INT NOT NULL DEFAULT 0,
+  creatorId VARCHAR(255) NOT NULL,
+  Foreign Key (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS vaults (
+  id int NOT NULL primary key,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  name VARCHAR(255) NOT NULL,
+  description VARCHAR(1000),
+  img VARCHAR(1000) NOT NULL,
+  isPrivate BOOLEAN NOT NULL DEFAULT False,
+  creatorId VARCHAR(255) NOT NULL,
+  Foreign Key (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
+);
+
+create TABLE IF NOT EXISTS vaultKeeps (
+  id int NOT NULL primary key,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  keepId Int NOT NULL,
+  vaultId Int NOT NULL,
+  creatorId VARCHAR(255) NOT NULL,
+  Foreign Key (creatorId) REFERENCES accounts (id) ON DELETE CASCADE,
+  Foreign Key (vaultId) REFERENCES vaults (id) ON DELETE CASCADE,
+  Foreign Key (keepId) REFERENCES keeps (id) ON DELETE CASCADE,
+  UNIQUE (keepId, vaultId)
+);
