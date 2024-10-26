@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS accounts(
 ALTER TABLE accounts ADD COLUMN coverImg VARCHAR(1000);
 
 CREATE TABLE IF NOT EXISTS keeps (
-  id int NOT NULL primary key,
+  id int NOT NULL primary key AUTO_INCREMENT,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   name VARCHAR(255) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS keeps (
 );
 
 CREATE TABLE IF NOT EXISTS vaults (
-  id int NOT NULL primary key,
+  id int NOT NULL primary key AUTO_INCREMENT,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   name VARCHAR(255) NOT NULL,
@@ -34,8 +34,18 @@ CREATE TABLE IF NOT EXISTS vaults (
   Foreign Key (creatorId) REFERENCES accounts (id) ON DELETE CASCADE
 );
 
+INSERT INTO 
+  vaults(name, img, creatorId)
+  VALUES('Pokemon', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiYT3bZ3je2oFM95saHalf5HVqcYHTcmk54w&s','66f32093b4e1c932f63ed63a');
+  Select 
+    vaults.*,
+    accounts.*
+    from vaults
+    JOIN accounts ON accounts.Id = vaults.creatorId
+    WHERE vaults.id = LAST_INSERT_ID();
+
 create TABLE IF NOT EXISTS vaultKeeps (
-  id int NOT NULL primary key,
+  id int NOT NULL primary key AUTO_INCREMENT,
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   keepId Int NOT NULL,
@@ -46,3 +56,64 @@ create TABLE IF NOT EXISTS vaultKeeps (
   Foreign Key (keepId) REFERENCES keeps (id) ON DELETE CASCADE,
   UNIQUE (keepId, vaultId)
 );
+
+Insert INTO 
+vaultKeeps(`keepId`, `vaultId`, `creatorId`)
+VALUES(4, 1, '66e04bf70483818f681bcaa1')
+
+DROP Table vaults
+
+
+INSERT INTO 
+      keeps(name, description, img, creatorId)
+      VALUES('Amazing View', 'Great view from a top of a mountain', 'https://www.travelandleisure.com/thmb/H_LyBQJ3AZKfg_HGYY5tOH3niB0=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/blue-ridge-mountains-USMNTNS0720-c68c0141d720475aa179bace8858fbd1.jpg', '66e04bf70483818f681bcaa1')
+
+
+
+  SELECT 
+      keeps.*, COUNT(
+        vaultKeeps.keepId
+      ) as kept,
+      accounts.*
+   FROM 
+    keeps
+    Join accounts ON accounts.id = keeps.creatorId
+    LEFT OUTER JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+  GROUP BY
+    keeps.id
+
+
+
+    SELECT 
+      keeps.*, COUNT(
+        vaultKeeps.keepId
+      ) as kept,
+      accounts.*
+   FROM 
+    keeps
+    Join accounts ON accounts.id = keeps.creatorId
+    LEFT OUTER JOIN vaultKeeps ON vaultKeeps.keepId = keeps.id
+  WHERE keeps.id = 1
+  GROUP BY
+    keeps.id
+
+
+    UPDATE keeps SET views = views + 1 WHERE keeps.id = 1;
+
+
+
+    Update keeps
+    SET (name = 'Tetons', 
+    description = 'The Tetons look amazing', 
+    img = 'https://cdn.britannica.com/37/145037-050-3D4B63C7/peaks-Teton-Range-Wyoming.jpg')
+   
+    Where id = 1
+
+
+
+Select 
+    vaults.*,
+    accounts.*
+    FROM vaults
+    JOIN accounts ON accounts.id = vaults.creatorId
+    WHERE vaults.id = 1;
