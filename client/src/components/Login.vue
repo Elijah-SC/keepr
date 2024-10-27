@@ -16,16 +16,14 @@ async function logout() {
 
 <template>
   <span class="navbar-text">
-    <button class="btn btn-primary selectable text-dark lighten-30 text-uppercase my-2 my-lg-0" @click="login"
-      v-if="!identity">
+    <button class="btn btn-info text-dark text-uppercase my-2 my-lg-0" @click="login" v-if="!identity">
       Login
     </button>
     <div v-else>
       <div class="dropdown my-2 my-lg-0">
-        <div type="button" class="bg-dark border-0 selectable no-select" data-bs-toggle="dropdown"
-          aria-expanded="false">
+        <div type="button" class="border-0 selectable no-select" data-bs-toggle="dropdown" aria-expanded="false">
           <div v-if="account?.picture || identity?.picture">
-            <img :src="account?.picture || identity?.picture" alt="account photo" class="bg-secondary" />
+            <img :src="account?.picture || identity?.picture" alt="account photo" />
           </div>
         </div>
         <div class="dropdown-menu dropdown-menu-sm-end dropdown-menu-start p-0" aria-labelledby="authDropdown">

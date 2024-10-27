@@ -1,6 +1,8 @@
 <script setup>
 import Navbar from './components/Navbar.vue';
 import { AppState } from './AppState.js';
+import ModalWrapper from "./components/globals/ModalWrapper.vue";
+import KeepDetails from "./components/KeepDetails.vue";
 
 </script>
 
@@ -11,9 +13,9 @@ import { AppState } from './AppState.js';
   <main class="bg-secondary">
     <router-view />
   </main>
-  <footer>
-
-  </footer>
+  <ModalWrapper modal-id="Keep-Modal">
+    <KeepDetails />
+  </ModalWrapper>
 </template>
 
 <style lang="scss">

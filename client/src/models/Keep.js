@@ -4,8 +4,9 @@ import { Profile } from "./Profile.js"
 export class Keep extends DBItem {
   constructor(data) {
     super(data)
-    this.description = data.Description
-    this.img = data.Img
+    this.name = data.name
+    this.description = data.description
+    this.img = data.img
     this.views = data.views
     this.kept = data.kept
     this.creatorId = data.creatorId

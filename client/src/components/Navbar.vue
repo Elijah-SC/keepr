@@ -1,9 +1,11 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
+import { AppState } from "@/AppState.js";
 
 const theme = ref(loadState('theme') || 'light')
+const account = computed(() => AppState.account)
 
 onMounted(() => {
   document.documentElement.setAttribute('data-bs-theme', theme.value)
@@ -18,12 +20,23 @@ function toggleTheme() {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm navbar-light bg-secondary px-3 mt-2 pb-3 bb">
+  <nav class="marko-one-regular navbar navbar-expand-sm navbar-light bg-secondary px-3 mt-2 pb-3 bb">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
         <Button class="btn btn-info">Home</Button>
       </div>
     </router-link>
+    <div v-if="account">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Create
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">New Keep</a></li>
+          <li><a class="dropdown-item" href="#">New Vault</a></li>
+        </ul>
+      </div>
+    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
