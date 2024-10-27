@@ -3,6 +3,7 @@ import Navbar from './components/Navbar.vue';
 import { AppState } from './AppState.js';
 import ModalWrapper from "./components/globals/ModalWrapper.vue";
 import KeepDetails from "./components/KeepDetails.vue";
+import KeepForm from "./components/globals/KeepForm.vue";
 
 </script>
 
@@ -15,6 +16,12 @@ import KeepDetails from "./components/KeepDetails.vue";
   </main>
   <ModalWrapper modal-id="Keep-Modal">
     <KeepDetails />
+  </ModalWrapper>
+  <ModalWrapper modal-id="Keep-Form" :HideHeader="false" title="Add Your Keep">
+    <KeepForm />
+  </ModalWrapper>
+  <ModalWrapper modal-id="Vault-Form" :HideHeader="false" title="Add Your Vault">
+    <KeepForm />
   </ModalWrapper>
 </template>
 
