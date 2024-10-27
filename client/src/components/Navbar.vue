@@ -18,32 +18,27 @@ function toggleTheme() {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark px-3">
+  <nav class="navbar navbar-expand-sm navbar-light bg-secondary px-3 mt-2 pb-3 bb">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="/img/cw-logo.png" height="45" />
+        <Button class="btn btn-info">Home</Button>
       </div>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
-        <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
-          </router-link>
-        </li>
-      </ul>
-      <!-- LOGIN COMPONENT HERE -->
+    <div class="collapse navbar-collapse justify-content-between" id="navbarText">
+      <div></div>
       <div>
-        <button class="btn text-light" @click="toggleTheme"
-          :title="`Enable ${theme == 'light' ? 'dark' : 'light'} theme.`">
-          <Icon :name="theme == 'light' ? 'weather-sunny' : 'weather-night'" />
-        </button>
+        <img src="/public/img/Keepr-logo.svg" alt="Keepr Logo" title="Logo">
       </div>
-      <Login />
+      <!-- LOGIN COMPONENT HERE -->
+      <div class="text-end d-flex align-items-center">
+        <div>
+        </div>
+        <Login title="Account Options" />
+      </div>
     </div>
   </nav>
 </template>
@@ -67,5 +62,9 @@ a:hover {
   nav {
     height: 64px;
   }
+}
+
+.bb {
+  box-shadow: 0px 1px 0px var(--bs-success);
 }
 </style>

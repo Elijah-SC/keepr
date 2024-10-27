@@ -6,7 +6,6 @@ namespace keepr.Services;
 public class KeepsService
 {
   private readonly KeepsRepository _keepsRepository;
-
   public KeepsService(KeepsRepository keepsRepository)
   {
     _keepsRepository = keepsRepository;
@@ -36,7 +35,7 @@ public class KeepsService
   internal Keep updateKeep(KeepCreationDTO updateData, int keepId, string userId)
   {
     Keep keep = getKeepById(keepId);
-    if (keep.creatorId != userId)
+    if (keep.CreatorId != userId)
     {
       throw new Exception("Invalid Credentials");
     }
@@ -52,7 +51,7 @@ public class KeepsService
   internal string deleteKeep(int keepId, string userId)
   {
     Keep keep = getKeepById(keepId);
-    if (keep.creatorId != userId)
+    if (keep.CreatorId != userId)
     {
       throw new Exception("Invalid Credentials");
     }

@@ -37,7 +37,7 @@ public class VaultsRepository
 
     return _db.Query(sql, (Vault v, Profile p) =>
     {
-      v.creator = p;
+      v.Creator = p;
       return v;
     }, new
     {
@@ -47,6 +47,22 @@ public class VaultsRepository
       vaultData.Img,
       creatorId
     }).FirstOrDefault();
+  }
+
+  internal void deleteVault(int vaultId)
+  {
+    string sql = @"DELETE FROM vaults WHERE vaults.id = @vaultId LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, new { vaultId });
+    switch (rowsAffected)
+    {
+      case 0:
+        throw new Exception("No Vaults were deleted");
+      case 1:
+        break;
+      default:
+        throw new Exception($"{rowsAffected} were deleted, Thats not Good");
+    }
   }
 
   internal Vault getVaultById(int vaultId)
@@ -61,9 +77,26 @@ public class VaultsRepository
 
     return _db.Query(sql, (Vault v, Profile p) =>
     {
-      v.creator = p;
+      v.Creator = p;
       return v;
     }, new { vaultId }).FirstOrDefault();
+  }
+
+  internal List<Vault> getVaultsForUser(string userId)
+  {
+    string sql = @"
+    SElECT 
+    vaults.*,
+    accounts.*
+    FROM vaults
+    JOIN accounts ON accounts.id = vaults.creatorId 
+    where vaults.creatorId = @userId;";
+
+    return _db.Query(sql, (Vault v, Profile p) =>
+    {
+      v.Creator = p;
+      return v;
+    }, new { userId }).ToList();
   }
 
   internal void updateVault(Vault vault, int vaultId)
@@ -82,7 +115,7 @@ public class VaultsRepository
     {
       vaultId,
       vault.Description,
-      vault.name,
+      vault.Name,
       vault.Img,
       vault.IsPrivate
     });

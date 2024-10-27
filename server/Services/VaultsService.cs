@@ -3,6 +3,9 @@
 
 
 
+
+using System.Diagnostics;
+
 namespace keepr.Services;
 
 public class VaultsService
@@ -20,10 +23,11 @@ public class VaultsService
     return vault;
   }
 
+
   internal Vault getVaultById(int vaultId, string userId)
   {
     Vault vault = getVaultById(vaultId);
-    if (vault.IsPrivate == true && vault.creatorId != userId)
+    if (vault.IsPrivate == true && vault.CreatorId != userId)
     {
       throw new Exception("invalid Credentials");
     }
@@ -42,17 +46,32 @@ public class VaultsService
   internal Vault updateVault(VaultCreationDTO updateData, int vaultId, string userId)
   {
     Vault vault = getVaultById(vaultId);
-    if (vault.creatorId != userId)
+    if (vault.CreatorId != userId)
     {
       throw new Exception("Invalid Credentials");
     }
 
-    vault.name = updateData.name ?? vault.name;
+    vault.Name = updateData.name ?? vault.Name;
     vault.Description = updateData.Description ?? vault.Description;
     vault.Img = updateData.Img ?? vault.Img;
     vault.IsPrivate = updateData.IsPrivate ?? vault.IsPrivate;
 
     _repository.updateVault(vault, vaultId);
     return vault;
+  }
+  internal ActionResult<string> deleteVault(int vaultId, string userId)
+  {
+    Vault vault = getVaultById(vaultId);
+    if (vault.CreatorId != userId)
+    {
+      throw new Exception("Invalid Credentials");
+    }
+    _repository.deleteVault(vaultId);
+    return "Vault was deleted";
+  }
+
+  internal List<Vault> GetVaultsForUser(string userId)
+  {
+    return _repository.getVaultsForUser(userId);
   }
 }

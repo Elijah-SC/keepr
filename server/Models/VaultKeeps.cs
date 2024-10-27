@@ -4,7 +4,6 @@ public class VaultKeepCreationDTO
 {
   public int KeepId { get; set; }
   public int VaultId { get; set; }
-  public string CreatorId { get; set; }
 }
 
 public class VaultKeep : RepoItem<int>
@@ -18,3 +17,4 @@ public class VaultKeep : RepoItem<int>
   public Vault Vault { get; set; }
 
 }
+

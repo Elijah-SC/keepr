@@ -13,10 +13,10 @@ public class VaultCreationDTO
 public class Vault : RepoItem<int>
 {
   public int Id { get; set; }
-  public string name { get; set; }
+  public string Name { get; set; }
   public string Description { get; set; }
   public string Img { get; set; }
   public bool IsPrivate { get; set; }
-  public string creatorId { get; set; }
-  public Profile creator { get; set; }
+  public string CreatorId { get; set; }
+  public Profile Creator { get; set; }
 }

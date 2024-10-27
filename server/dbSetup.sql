@@ -117,3 +117,28 @@ Select
     FROM vaults
     JOIN accounts ON accounts.id = vaults.creatorId
     WHERE vaults.id = 1;
+
+
+    SElECT 
+    vaults.*,
+    accounts.*
+    FROM vaults
+    JOIN accounts ON accounts.id = vaults.creatorId 
+    where vaults.creatorId = '66f32093b4e1c932f63ed63a';
+
+    INSERT INTO 
+    vaultKeeps(vaultId, keepId, creatorId)
+    Values(2, 3, '66f32093b4e1c932f63ed63a');
+    SELECT * FROM vaultKeeps 
+    WHERE 
+      id = LAST_INSERT_ID();
+
+
+      SELECT
+    vaultKeeps.*,
+    keeps.*,
+    accounts.*
+    FROM vaultKeeps
+    JOIN keeps ON keeps.id = vaultKeeps.keepId
+    JOIN accounts ON accounts.id = keeps.creatorId
+    WHERE vaultKeeps.vaultId = 30;

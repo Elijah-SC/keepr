@@ -31,7 +31,7 @@ public class KeepsRepository
 
     return _db.Query(sql, (Keep k, Profile p) =>
     {
-      k.creator = p;
+      k.Creator = p;
       return k;
     }, new
     {
@@ -78,7 +78,7 @@ public class KeepsRepository
 
     return _db.Query(sql, (Keep k, Profile p) =>
     {
-      k.creator = p;
+      k.Creator = p;
       return k;
     }
     ).ToList();
@@ -105,7 +105,7 @@ public class KeepsRepository
 
     return _db.Query(sql, (Keep k, Profile p) =>
     {
-      k.creator = p;
+      k.Creator = p;
       return k;
     }, new { keepId }).FirstOrDefault();
   }
