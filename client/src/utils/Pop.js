@@ -4,8 +4,8 @@ import { logger } from './Logger.js'
 import { AxiosError } from 'axios'
 
 const colorConfig = {
-  confirmButtonColor: 'var(--bs-primary)',
-  cancelButtonColor: 'var(--bs-secondary)',
+  confirmButtonColor: 'var(blue)',
+  cancelButtonColor: 'red',
   background: 'var(--bs-tertiary-bg)',
   color: 'var(--bs-body-color)'
 }

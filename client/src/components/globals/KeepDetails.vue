@@ -2,7 +2,6 @@
 import { AppState } from "@/AppState.js";
 import { keepsService } from "@/services/KeepsService.js";
 import { computed } from "vue";
-import ProfilePicture from "./ProfilePicture.vue";
 
 const Keep = computed(() => AppState.activeKeep);
 const account = computed(() => AppState.account)

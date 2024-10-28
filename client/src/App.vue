@@ -1,9 +1,9 @@
 <script setup>
 import Navbar from './components/Navbar.vue';
-import { AppState } from './AppState.js';
 import ModalWrapper from "./components/globals/ModalWrapper.vue";
 import KeepDetails from "./components/KeepDetails.vue";
 import KeepForm from "./components/globals/KeepForm.vue";
+import VaultForm from "./components/globals/VaultForm.vue";
 
 </script>
 
@@ -14,14 +14,14 @@ import KeepForm from "./components/globals/KeepForm.vue";
   <main class="bg-secondary">
     <router-view />
   </main>
-  <ModalWrapper modal-id="Keep-Modal">
+  <ModalWrapper modal-id="Keep-Modal" size="modal-xl" position="modal-dialog-centered">
     <KeepDetails />
-  </ModalWrapper>
-  <ModalWrapper modal-id="Keep-Form" :HideHeader="false" title="Add Your Keep">
+  </ModalWrapper>s
+  <ModalWrapper modal-id="Keep-Form" :HideHeader="false" title="Add Your Keep" size="" position="">
     <KeepForm />
   </ModalWrapper>
-  <ModalWrapper modal-id="Vault-Form" :HideHeader="false" title="Add Your Vault">
-    <KeepForm />
+  <ModalWrapper modal-id="Vault-Form" :HideHeader="false" title="Add Your Vault" size="" position="">
+    <VaultForm />
   </ModalWrapper>
 </template>
 

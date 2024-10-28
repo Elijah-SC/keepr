@@ -1,9 +1,12 @@
 <script setup>
 import { Keep } from "@/models/Keep.js";
-import { Profile } from "@/models/Profile.js";
-import ProfilePicture from "../ProfilePicture.vue";
 import Pop from "@/utils/Pop.js";
 import { keepsService } from "@/services/KeepsService.js";
+import { AppState } from "@/AppState.js";
+import { computed } from "vue";
+import ProfilePicture from "../ProfilePicture.vue";
+
+const account = computed(() => AppState.account)
 
 const props = defineProps({
   keep: { type: Keep, required: true }
@@ -18,6 +21,24 @@ async function getKeepById() {
     Pop.error(error);
   }
 }
+
+async function deleteKeep() {
+  try {
+    const confirm = await Pop.confirm("Are you sure you want to Keep this keep")
+    if (!confirm) return
+    await keepsService.deleteKeep(props.keep.id)
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
+const authorizedUser = computed(() => {
+  if (!account.value) return false
+  if (props.keep.creatorId != account.value.id) return false
+  return true
+}
+)
 </script>
 
 
@@ -25,6 +46,8 @@ async function getKeepById() {
   <div class="Parent">
     <img @click="getKeepById()" :src="keep.img" alt="keep Img" class="rounded" data-bs-toggle="modal"
       data-bs-target="#Keep-Modal" title="See Keep details">
+    <span @click="deleteKeep()" role="button" v-if="authorizedUser" class="delete"><i class="mdi mdi-delete"
+        title="delete Keep"></i></span>
     <p class="marko-one-regular text-light Child text-start">{{ keep.name }}</p>
     <ProfilePicture :profile="keep.creator" class="profile-pic" />
   </div>
@@ -63,6 +86,13 @@ img {
   height: 2.5em;
   width: 2.5em;
   border-radius: 50%;
+}
+
+.delete {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  color: red;
 }
 
 @media screen and (max-width: 992px) {
