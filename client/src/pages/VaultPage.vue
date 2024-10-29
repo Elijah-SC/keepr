@@ -13,6 +13,7 @@ const route = useRoute();
 const router = useRouter();
 const activeVault = computed(() => AppState.activeVault);
 const keeps = computed(() => AppState.keepsInVault);
+const account = computed(() => AppState.account)
 
 
 async function getVaultById() {
@@ -41,11 +42,19 @@ async function deleteVault() {
     const confirm = await Pop.confirm("Are you sure you want to delete this Vault")
     if (!confirm) return
     await vaultsService.deleteVault(activeVault.value.id)
+    Pop.toast("Vault Deleted")
+    router.push({ name: 'Account' })
   }
   catch (error) {
     Pop.error(error);
   }
 }
+
+const authorizedUser = computed(() => {
+  if (!account.value) return false
+  if (activeVault.value.creator.id != account.value.id) return false
+  return true
+})
 
 const keepOrKeeps = keeps.value?.length == 1 ? "Keep" : "Keeps";
 </script>
@@ -66,7 +75,8 @@ const keepOrKeeps = keeps.value?.length == 1 ? "Keep" : "Keeps";
           <div class="d-flex justify-content-between">
             <h3 class="text-start mb-0">Description</h3>
             <div class="dropdown-center">
-              <button class="btn btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button v-if="authorizedUser" class="btn btn-secondary" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
                 ...
               </button>
               <ul class="dropdown-menu">

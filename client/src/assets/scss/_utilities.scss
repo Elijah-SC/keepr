@@ -62,10 +62,11 @@ input,
 textarea,
 select {
   &:not(:placeholder-shown) {
-    &:valid {
+    &:valid:not([type="checkbox"]) {
       outline: solid 1px transparentize($success, .65);
       outline-offset: -2px;
     }
+
     &:invalid {
       outline: dashed 1px transparentize($danger, .65);
       outline-offset: -2px;

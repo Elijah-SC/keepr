@@ -4,6 +4,7 @@ import ModalWrapper from "./components/globals/ModalWrapper.vue";
 import KeepForm from "./components/globals/KeepForm.vue";
 import VaultForm from "./components/globals/VaultForm.vue";
 import KeepDetails from "./components/globals/KeepDetails.vue";
+import AccountForm from "./components/globals/AccountForm.vue";
 
 </script>
 
@@ -22,6 +23,9 @@ import KeepDetails from "./components/globals/KeepDetails.vue";
   </ModalWrapper>
   <ModalWrapper modal-id="Vault-Form" :HideHeader="false" title="Add Your Vault" size="" position="">
     <VaultForm />
+  </ModalWrapper>
+  <ModalWrapper modal-id="Account-Modal" :HideHeader="false" title="Edit Your Account" size="" position="">
+    <AccountForm />
   </ModalWrapper>
 </template>
 

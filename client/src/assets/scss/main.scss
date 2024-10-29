@@ -5,13 +5,13 @@
 
 body {
   overscroll-behavior: none;
+  background-color: var(--bs-secondary);
 }
 
 #app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: var(--bs-page);
 }
 
 main {

@@ -6,6 +6,7 @@ import ProfilePicture from "../ProfilePicture.vue";
 import Pop from "@/utils/Pop.js";
 import { api } from "@/services/AxiosService.js";
 import { vaultKeepsService } from "@/services/VaultKeepsService.js";
+import { Modal } from "bootstrap";
 
 const Keep = computed(() => AppState.activeKeep);
 const account = computed(() => AppState.account)
@@ -34,6 +35,10 @@ async function createVaultKeep() {
   catch (error) {
     Pop.error(error);
   }
+}
+
+async function closeModal() {
+  Modal.getOrCreateInstance('#Keep-Modal').hide()
 }
 </script>
 
@@ -81,7 +86,11 @@ async function createVaultKeep() {
           </div>
           <div v-else></div>
           <div class="me-2 d-flex align-items-center">
-            <ProfilePicture :profile="Keep.creator" class="picture" />
+            <router-link @click="closeModal()" :to="{ name: 'Profile', params: { profileId: Keep.creatorId } }"
+              title="See Vault Page">
+              <ProfilePicture :profile="Keep.creator" class="picture"
+                :title="'Go to ' + Keep.creator.name + `'s profile page`" />
+            </router-link>
             <p class="mb-0 ms-2 md-invisible">{{ Keep.creator.name }}</p>
           </div>
         </div>

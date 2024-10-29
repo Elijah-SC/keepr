@@ -5,22 +5,47 @@ import Pop from "@/utils/Pop.js";
 import { vaultsService } from "@/services/VaultService.js";
 import { accountService } from "@/services/AccountService.js";
 import VaultCard from "@/components/globals/VaultCard.vue";
+import { Profile } from "@/models/Profile.js";
+import { profileService } from "@/services/ProfileService.js";
+import { useRoute, useRouter } from "vue-router";
+import KeepCard from "@/components/globals/KeepCard.vue";
 
 
 onMounted(() => {
-  getAccountVaults()
-  getAccountKeeps()
+  getUserProfile()
 })
 
+const profile = computed(() => AppState.ActiveProfile)
 const account = computed(() => AppState.account)
-watch(() => account.value, getAccountKeeps)
+watch(() => profile.value, getAccountKeeps)
+const route = useRoute()
+const router = useRouter()
 
 const keeps = computed(() => AppState.keeps)
-const vaults = computed(() => AppState.vaults)
+const vaults = computed(() => AppState.ProfileVaults)
 
-async function getAccountVaults() {
+async function getUserProfile() {
   try {
-    await accountService.getAccountVaults()
+    await profileService.getUserProfile(route.params.profileId)
+    checkIfProfileIsUser()
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
+
+function checkIfProfileIsUser() {
+  if (account.value?.id == profile.value.id) {
+    router.push({ name: "Account" })
+  }
+  getProfileVaults()
+  getAccountKeeps()
+}
+
+
+async function getProfileVaults() {
+  try {
+    await accountService.getProfileVaults(route.params.profileId)
   }
   catch (error) {
     Pop.error(error);
@@ -29,8 +54,8 @@ async function getAccountVaults() {
 async function getAccountKeeps() {
   try {
     await accountService.clearGhostData()
-    if (!account.value) return
-    await accountService.getAccountKeeps(account.value.id)
+    if (!profile.value) return
+    await accountService.getAccountKeeps(profile.value.id)
   }
   catch (error) {
     Pop.error(error);
@@ -41,29 +66,17 @@ async function getAccountKeeps() {
 
 <template>
   <section class="container-fluid">
-    <div v-if="account" class="row justify-content-center">
-      <div class="col-11 text-center mt-3 Parent p-0">
-        <img :src="account.coverImg" alt="account Cover Img" class="w-100 cover-img">
+    <div v-if="profile" class="row justify-content-center">
+      <div class="col-11 text-center mt-3 Parent">
+        <img :src="profile.coverImg" alt="account Cover Img" class="w-100 cover-img">
         <div class="Child w-100">
-          <img class="profile-pic" :src="account.picture" alt="" />
-          <div class="d-flex justify-content-center align-items-center">
-            <h1 class="mt-2 marko-one-regular">{{ account.name }}</h1>
-            <div class="dropdown-center text-end">
-              <button v-if="account" class="btn btn-secondary" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                ...
-              </button>
-              <ul class="dropdown-menu">
-                <li><a data-bs-toggle="modal" data-bs-target="#Account-Modal" class="dropdown-item">Edit Account</a>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <img class="profile-pic" :src="profile.picture" alt="" />
+          <h1 class="mt-2 marko-one-regular">{{ profile.name }}</h1>
           <h4>{{ vaults?.length }} Vaults | {{ keeps?.length }} Keeps</h4>
           <div class="text-start">
             <h1 class="marko-one-regular mt-3">Vaults</h1>
             <div class="row">
-              <div v-for="vault in vaults" :key="vault.id" class="col-sm-4 col-md-3">
+              <div v-for="vault in vaults" :key="vault.id" class="col-md-3">
                 <VaultCard :vault="vault" />
               </div>
             </div>

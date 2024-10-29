@@ -4,8 +4,14 @@ import { Account } from '../models/Account.js'
 import { logger } from '../utils/Logger.js'
 import { api } from './AxiosService.js'
 import { Vault } from "@/models/Vault.js"
+import { Profile } from "@/models/Profile.js"
 
 class AccountService {
+  async updateAccount(updateData) {
+    const response = await api.put("/account", updateData)
+    const newAccount = new Account(response.data)
+    AppState.account = newAccount
+  }
   clearGhostData() {
     AppState.keeps = null
   }
@@ -20,6 +26,12 @@ class AccountService {
     logger.log("got vaults for account", response.data)
     const newVaults = response.data.map(vault => new Vault(vault))
     AppState.vaults = newVaults;
+  }
+  async getProfileVaults(profileId) {
+    const response = await api.get(`api/profiles/${profileId}/vaults`)
+    logger.log("got vaults for account", response.data)
+    const newVaults = response.data.map(vault => new Vault(vault))
+    AppState.ProfileVaults = newVaults;
   }
   async getAccount() {
     try {
