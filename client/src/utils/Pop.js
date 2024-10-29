@@ -30,7 +30,7 @@ function _error(error, eventTrigger = '') {
     toast: true,
     showConfirmButton: false,
     color: 'var(--bs-danger-text-emphasis)',
-    background: 'var(--bs-danger-bg-subtle)'
+    background: 'var(--bs-error-bg-subtle)'
   }
 
 

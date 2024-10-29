@@ -10,6 +10,7 @@ export class Keep extends DBItem {
     this.views = data.views
     this.kept = data.kept
     this.creatorId = data.creatorId
+    this.vaultKeepId = data.vaultKeepId
     this.creator = data.creator ? new Profile(data.creator) : null
   }
 }

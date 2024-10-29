@@ -3,9 +3,11 @@ import { computed, onMounted, ref } from 'vue';
 import { loadState, saveState } from '../utils/Store.js';
 import Login from './Login.vue';
 import { AppState } from "@/AppState.js";
+import { useRoute } from "vue-router";
 
 const theme = ref(loadState('theme') || 'light')
 const account = computed(() => AppState.account)
+const route = useRoute();
 
 onMounted(() => {
   document.documentElement.setAttribute('data-bs-theme', theme.value)
@@ -26,7 +28,7 @@ function toggleTheme() {
         <Button class="btn btn-info">Home</Button>
       </div>
     </router-link>
-    <div v-if="account">
+    <div v-if="account && route.name == 'Account' || route.name == 'Home'">
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           Create

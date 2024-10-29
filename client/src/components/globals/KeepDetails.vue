@@ -1,10 +1,40 @@
 <script setup>
 import { AppState } from "@/AppState.js";
 import { keepsService } from "@/services/KeepsService.js";
-import { computed } from "vue";
+import { computed, ref } from "vue";
+import ProfilePicture from "../ProfilePicture.vue";
+import Pop from "@/utils/Pop.js";
+import { api } from "@/services/AxiosService.js";
+import { vaultKeepsService } from "@/services/VaultKeepsService.js";
 
 const Keep = computed(() => AppState.activeKeep);
 const account = computed(() => AppState.account)
+const UserVaults = computed(() => AppState.vaults)
+
+defineProps({
+  vaultKeepId: { type: Number }
+})
+
+const formData = ref({
+  vaultId: 0,
+})
+
+async function createVaultKeep() {
+  try {
+    const creationBody = {
+      vaultId: formData.value.vaultId,
+      keepId: Keep.value.id
+    }
+    await vaultKeepsService.createVaultKeep(creationBody)
+    formData.value = {
+      vaultId: 0,
+    }
+    Pop.toast("Keep Saved to Vault")
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
 </script>
 
 
@@ -30,8 +60,24 @@ const account = computed(() => AppState.account)
           <p>{{ Keep.description }}</p>
         </div>
         <div class="d-flex p-2 w-100 align-items-center justify-content-between">
-          <div v-if="account" class="ms-2">
-            <Button class="btn btn-warning text-dark">Save</Button>
+          <div v-if="Keep.vaultKeepId">
+            <button>Remove <i class="mdi mdi-close-circle-outline"></i></button>
+          </div>
+          <div v-else-if="account" class="ms-2 container-fluid">
+            <form @submit.prevent="createVaultKeep()" class="row align-items-center">
+              <div class="col-md-6">
+                <select v-model="formData.vaultId" name="Vault" id="" class="form-select outline"
+                  aria-label="Vault selection">
+                  <option selected :value="0" disabled class="outline">Select a Vault</option>
+                  <option v-for="vault in UserVaults" :key="vault.id" :value="vault.id" class="text-uppercase outline">
+                    {{
+                      vault.name }}</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <Button type="submit" class="btn btn-warning text-dark">Save</Button>
+              </div>
+            </form>
           </div>
           <div v-else></div>
           <div class="me-2 d-flex align-items-center">
@@ -86,5 +132,11 @@ img {
 
 .col-md-6 {
   padding: unset;
+}
+
+.outline {
+  outline: solid 0px rgb(255, 255, 255);
+  outline-offset: 0px;
+  background-color: var(--bs--secondary);
 }
 </style>

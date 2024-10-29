@@ -57,6 +57,11 @@ create TABLE IF NOT EXISTS vaultKeeps (
   UNIQUE (keepId, vaultId)
 );
 
+ALTER TABLE vaultKeeps 
+DROP UNIQUE KEY;
+
+show indexes from `vaultKeeps`
+
 Insert INTO 
 vaultKeeps(`keepId`, `vaultId`, `creatorId`)
 VALUES(4, 1, '66e04bf70483818f681bcaa1')
@@ -142,3 +147,11 @@ Select
     JOIN keeps ON keeps.id = vaultKeeps.keepId
     JOIN accounts ON accounts.id = keeps.creatorId
     WHERE vaultKeeps.vaultId = 30;
+
+
+SELECT
+    vaults.*,
+    accounts.*
+    FROM vaults
+    JOIN accounts ON accounts.id = vaults.creatorId
+    where vaults.creatorId = '66f32093b4e1c932f63ed63a';

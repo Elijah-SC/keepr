@@ -34,16 +34,25 @@ public class AccountsRepository
     return newAccount;
   }
 
-  internal Account Edit(Account update)
+  internal void Edit(Account update)
   {
     string sql = @"
             UPDATE accounts
             SET 
               name = @Name,
-              picture = @Picture
+              picture = @Picture,
+              coverImg = @coverImg
             WHERE id = @Id;";
-    _db.Execute(sql, update);
-    return update;
+    int rowsAffected = _db.Execute(sql, update);
+    switch (rowsAffected)
+    {
+      case 0:
+        throw new Exception("No Accounts were updated");
+      case 1:
+        break;
+      default:
+        throw new Exception($"{rowsAffected} accounts where updated, thats not good");
+    }
   }
 }
 

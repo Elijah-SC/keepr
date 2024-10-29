@@ -29,11 +29,13 @@ public class AccountService
     return account;
   }
 
-  internal Account Edit(Account editData, string accountId)
+  internal Account Edit(ProfileUpdateDTO editData, string accountId)
   {
     Account original = GetAccount(accountId);
     original.Name = editData.Name ?? editData.Name;
     original.Picture = editData.Picture ?? editData.Picture;
-    return _repo.Edit(original);
+    original.CoverImg = editData.CoverImg ?? editData.CoverImg;
+    _repo.Edit(original);
+    return original;
   }
 }

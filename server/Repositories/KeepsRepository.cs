@@ -2,6 +2,7 @@
 
 
 
+
 namespace keepr.Repositories;
 
 public class KeepsRepository
@@ -108,6 +109,23 @@ public class KeepsRepository
       k.Creator = p;
       return k;
     }, new { keepId }).FirstOrDefault();
+  }
+
+  internal List<Keep> getProfileKeeps(string profileId)
+  {
+    string sql = @"
+    SELECT 
+    keeps.*,
+    accounts.*
+    FROM keeps
+    JOIN accounts ON accounts.id = keeps.creatorId
+    WHERE keeps.creatorId = @profileId;";
+
+    return _db.Query(sql, (Keep k, Profile p) =>
+    {
+      k.Creator = p;
+      return k;
+    }, new { profileId }).ToList();
   }
 
   internal void updateKeep(Keep keep)

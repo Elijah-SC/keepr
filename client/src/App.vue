@@ -1,9 +1,9 @@
 <script setup>
 import Navbar from './components/Navbar.vue';
 import ModalWrapper from "./components/globals/ModalWrapper.vue";
-import KeepDetails from "./components/KeepDetails.vue";
 import KeepForm from "./components/globals/KeepForm.vue";
 import VaultForm from "./components/globals/VaultForm.vue";
+import KeepDetails from "./components/globals/KeepDetails.vue";
 
 </script>
 
@@ -16,7 +16,7 @@ import VaultForm from "./components/globals/VaultForm.vue";
   </main>
   <ModalWrapper modal-id="Keep-Modal" size="modal-xl" position="modal-dialog-centered">
     <KeepDetails />
-  </ModalWrapper>s
+  </ModalWrapper>
   <ModalWrapper modal-id="Keep-Form" :HideHeader="false" title="Add Your Keep" size="" position="">
     <KeepForm />
   </ModalWrapper>
@@ -30,11 +30,5 @@ import VaultForm from "./components/globals/VaultForm.vue";
 
 :root {
   --main-height: calc(100vh - 32px - 64px);
-}
-
-footer {
-  display: grid;
-  place-content: center;
-  height: 32px;
 }
 </style>

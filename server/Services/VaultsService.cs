@@ -5,6 +5,7 @@
 
 
 using System.Diagnostics;
+using Microsoft.VisualBasic;
 
 namespace keepr.Services;
 
@@ -73,5 +74,15 @@ public class VaultsService
   internal List<Vault> GetVaultsForUser(string userId)
   {
     return _repository.getVaultsForUser(userId);
+  }
+
+  internal List<Vault> getProfileVaults(string profileId, string userId)
+  {
+    List<Vault> vaults = _repository.getProfileVaults(profileId);
+    if (profileId != userId)
+    {
+      return vaults.Where(vault => vault.IsPrivate == false).ToList();
+    }
+    else return vaults;
   }
 }

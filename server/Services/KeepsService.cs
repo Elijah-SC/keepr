@@ -1,6 +1,7 @@
 
 
 
+
 namespace keepr.Services;
 
 public class KeepsService
@@ -59,5 +60,10 @@ public class KeepsService
     _keepsRepository.deleteKeep(keepId);
 
     return "Keep was Deleted";
+  }
+
+  internal List<Keep> getProfileKeeps(string profileId)
+  {
+    return _keepsRepository.getProfileKeeps(profileId);
   }
 }

@@ -4,7 +4,7 @@ namespace keepr.Models;
 
 public class KeepCreationDTO : RepoItem<int>
 {
-  [MinLength(1), MaxLength(15)] public string Name { get; set; }
+  [MinLength(1), MaxLength(20)] public string Name { get; set; }
   [MinLength(5), MaxLength(1000)] public string Description { get; set; }
   [MinLength(5), MaxLength(1000)] public string Img { get; set; }
 }
