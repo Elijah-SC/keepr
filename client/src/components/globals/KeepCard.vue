@@ -60,9 +60,9 @@ const vaultCreator = computed(() => {
 
 
 <template>
-  <div class="Parent">
-    <img @click="getKeepById()" :src="keep.img" alt="keep Img" class="rounded w-100" data-bs-toggle="modal"
-      data-bs-target="#Keep-Modal" title="See Keep details">
+  <div @click="getKeepById()" class="Parent">
+    <img :src="keep.img" alt="keep Img" class="rounded w-100" data-bs-toggle="modal" data-bs-target="#Keep-Modal"
+      title="See Keep details">
     <span @click="deleteVaultKeep()" role="button" v-if="vaultCreator && keep.vaultKeepId != null" class="delete"><i
         class="fs-3 mdi mdi-close-circle-outline" title="Remove From Vault"></i></span>
     <span @click="deleteKeep()" role="button" v-else-if="authorizedUser" class="delete"><i class="mdi mdi-delete"
