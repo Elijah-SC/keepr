@@ -67,30 +67,30 @@ async function getAccountKeeps() {
 <template>
   <section class="container-fluid">
     <div v-if="profile" class="row justify-content-center">
-      <div class="col-11 text-center mt-3 Parent">
+      <div class="col-11 text-center mt-3">
         <img :src="profile.coverImg" alt="account Cover Img" class="w-100 cover-img">
-        <div class="Child w-100">
+        <div class="w-100">
           <img class="profile-pic" :src="profile.picture" alt="" />
           <h1 class="mt-2 marko-one-regular">{{ profile.name }}</h1>
           <h4>{{ vaults?.length }} Vaults | {{ keeps?.length }} Keeps</h4>
-          <div class="text-start">
-            <h1 class="marko-one-regular mt-3">Vaults</h1>
-            <div class="row">
-              <div v-for="vault in vaults" :key="vault.id" class="col-md-3">
-                <VaultCard :vault="vault" />
-              </div>
+        </div>
+        <div class="text-start">
+          <h1 class="marko-one-regular mt-3">Vaults</h1>
+          <div class="row">
+            <div v-for="vault in vaults" :key="vault.id" class="col-md-3">
+              <VaultCard :vault="vault" />
             </div>
+          </div>
 
+        </div>
+        <div class="text-start">
+          <h1 class="marko-one-regular mt-3">Keeps</h1>
+        </div>
+        <div class="masonry-container text-center">
+          <div class="mb-3" v-for="keep in keeps" :key="keep.id">
+            <KeepCard :keep="keep" />
           </div>
-          <div class="text-start">
-            <h1 class="marko-one-regular mt-3">Keeps</h1>
-          </div>
-          <div class="masonry-container text-center">
-            <div class="mb-3" v-for="keep in keeps" :key="keep.id">
-              <KeepCard :keep="keep" />
-            </div>
 
-          </div>
         </div>
       </div>
     </div>
@@ -114,6 +114,7 @@ async function getAccountKeeps() {
   max-height: 70vh;
   object-fit: cover;
   object-position: center;
+  margin-bottom: -13%;
 }
 
 .Parent {

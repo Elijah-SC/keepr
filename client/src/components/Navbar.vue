@@ -28,7 +28,7 @@ function toggleTheme() {
         <Button class="btn btn-info">Home</Button>
       </div>
     </router-link>
-    <div v-if="account && route.name == 'Account' || route.name == 'Home'">
+    <div v-if="account && route.name == 'Home' || route.name == 'Account'">
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
           Create

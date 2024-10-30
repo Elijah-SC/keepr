@@ -42,10 +42,10 @@ async function getAccountKeeps() {
 <template>
   <section class="container-fluid">
     <div v-if="account" class="row justify-content-center">
-      <div class="col-11 text-center mt-3 Parent p-0">
+      <div class="col-11 text-center mt-3 p-0">
         <img :src="account.coverImg" alt="account Cover Img" class="w-100 cover-img">
-        <div class="Child w-100">
-          <img class="profile-pic" :src="account.picture" alt="" />
+        <div class="w-100">
+          <img class="profile-pic" :src="account.picture" alt="profile picture" />
           <div class="d-flex justify-content-center align-items-center">
             <h1 class="mt-2 marko-one-regular">{{ account.name }}</h1>
             <div class="dropdown-center text-end">
@@ -60,24 +60,24 @@ async function getAccountKeeps() {
             </div>
           </div>
           <h4>{{ vaults?.length }} Vaults | {{ keeps?.length }} Keeps</h4>
-          <div class="text-start">
-            <h1 class="marko-one-regular mt-3">Vaults</h1>
-            <div class="row">
-              <div v-for="vault in vaults" :key="vault.id" class="col-sm-4 col-md-3">
-                <VaultCard :vault="vault" />
-              </div>
+        </div>
+        <div class="text-start">
+          <h1 class="marko-one-regular mt-3">Vaults</h1>
+          <div class="row">
+            <div v-for="vault in vaults" :key="vault.id" class="col-sm-4 col-md-3">
+              <VaultCard :vault="vault" />
             </div>
+          </div>
 
+        </div>
+        <div class="text-start">
+          <h1 class="marko-one-regular mt-3">Keeps</h1>
+        </div>
+        <div class="masonry-container text-center">
+          <div class="mb-3" v-for="keep in keeps" :key="keep.id">
+            <KeepCard :keep="keep" />
           </div>
-          <div class="text-start">
-            <h1 class="marko-one-regular mt-3">Keeps</h1>
-          </div>
-          <div class="masonry-container text-center">
-            <div class="mb-3" v-for="keep in keeps" :key="keep.id">
-              <KeepCard :keep="keep" />
-            </div>
 
-          </div>
         </div>
       </div>
     </div>
@@ -101,17 +101,9 @@ async function getAccountKeeps() {
   max-height: 70vh;
   object-fit: cover;
   object-position: center;
+  margin-bottom: -13%;
 }
 
-.Parent {
-  position: relative;
-}
-
-.Child {
-  position: absolute;
-  top: 75%;
-  margin: auto;
-}
 
 .masonry-container {
   columns: 4;
