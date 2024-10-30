@@ -54,7 +54,7 @@ create TABLE IF NOT EXISTS vaultKeeps (
   Foreign Key (creatorId) REFERENCES accounts (id) ON DELETE CASCADE,
   Foreign Key (vaultId) REFERENCES vaults (id) ON DELETE CASCADE,
   Foreign Key (keepId) REFERENCES keeps (id) ON DELETE CASCADE,
-  UNIQUE (keepId, vaultId)
+  UNIQUE KEY (keepId, vaultId)
 );
 
 ALTER TABLE vaultKeeps 

@@ -47,13 +47,13 @@ async function deleteVaultKeep() {
 
 const authorizedUser = computed(() => {
   if (!account.value) return false
-  if (props.keep.creatorId != account.value.id) return false
+  if (props.keep.creatorId != account.value?.id) return false
   return true
 })
 
 const vaultCreator = computed(() => {
   if (!activeVault.value) return false
-  if (activeVault.value.creator.id != account.value.id) return false
+  if (activeVault.value.creator.id != account.value?.id) return false
   return true
 })
 </script>
