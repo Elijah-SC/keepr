@@ -53,9 +53,13 @@ create TABLE IF NOT EXISTS vaultKeeps (
   creatorId VARCHAR(255) NOT NULL,
   Foreign Key (creatorId) REFERENCES accounts (id) ON DELETE CASCADE,
   Foreign Key (vaultId) REFERENCES vaults (id) ON DELETE CASCADE,
-  Foreign Key (keepId) REFERENCES keeps (id) ON DELETE CASCADE,
-  UNIQUE KEY (keepId, vaultId)
+  Foreign Key (keepId) REFERENCES keeps (id) ON DELETE CASCADE
 );
+
+ALTER TABLE `vaultKeeps` DROP INDEX keepIdInt;
+ALTER TABLE `vaultKeeps` DROP INDEX keepId;
+ALTER TABLE `vaultKeeps` RENAME COLUMN keepIdInt TO keepId;
+drop TABLE `vaultKeeps`
 
 ALTER TABLE vaultKeeps 
 DROP UNIQUE KEY;

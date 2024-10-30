@@ -80,7 +80,7 @@ async function closeModal() {
                 </select>
               </div>
               <div class="col-md-3">
-                <Button type="submit" class="btn btn-warning text-dark">Save</Button>
+                <button type="submit" class="btn btn-warning text-dark">Save</button>
               </div>
             </form>
           </div>

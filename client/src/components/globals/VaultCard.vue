@@ -10,7 +10,7 @@ defineProps({
 <template>
   <router-link :to="{ name: 'Vault', params: { vaultId: vault.id } }" title="See Vault Page">
     <div class="Vault-Card my-3 w-100">
-      <img :src="vault.img" alt="vault img" class="w-100 rounded h-100">
+      <img :src="vault.img" alt="Vault-Img" class="w-100 rounded h-100">
       <h4 class="marko-one-regular Vault-Name">{{ vault.name }}</h4>
       <i v-if="vault.isPrivate" class="fs-3 mdi mdi-shield-lock-outline Vault-Lock" title="Private Vault"></i>
     </div>
@@ -47,5 +47,10 @@ defineProps({
   font-size: 1.15em;
   color: rgb(255, 255, 255);
 
+}
+
+.Vault-Img {
+  object-fit: cover;
+  object-position: center;
 }
 </style>
